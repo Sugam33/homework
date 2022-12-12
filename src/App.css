@@ -36,3 +36,42 @@
     transform: rotate(360deg);
   }
 }
+
+.saman {
+  width: 800px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px auto;
+}
+  
+table, th, td {
+  border: 2px solid black;
+  height: 40px;
+  width: 800px;
+  border-collapse: collapse;
+}
+  
+th {
+  border-bottom: 1px solid black;
+}
+  
+td {
+  text-align: center;
+}
+
+.title {
+  text-decoration: underline;
+}
+
+#delete{
+  background-color: red;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+#update{
+  background-color: yellow;
+  font-weight: bold;
+  font-size: 15px;
+}

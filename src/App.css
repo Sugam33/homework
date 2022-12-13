@@ -51,9 +51,14 @@ table, th, td {
   width: 800px;
   border-collapse: collapse;
 }
+
+tr:nth-child(even) {
+  background-color: #D6EEEE;
+}
   
 th {
   border-bottom: 1px solid black;
+  background-color: lightgreen;
 }
   
 td {

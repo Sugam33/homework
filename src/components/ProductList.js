@@ -18,24 +18,28 @@ const ProductList = () => {
  
    const deleteProduct = (givenId) => {
     setProduct(product.filter((p) => p.id !== givenId));
-    toast.warn("Product Deleted")
+    toast.error("Product Deleted")
    }
 
    const addProduct = () => {
+    if(item === '' || quantity === '' || price === ''){
+        toast.error("Enter the details")
+    }
+    else{
     setProduct([...product, {id: new Date().getTime(), item, quantity, price}])
     setItem("")
     setQuantity("")
     setPrice("")
     toast.success("Product Added")
    }
-
+}
    const storeProduct = (product) => {
     setItem(product.item)
     setQuantity(product.quantity)
     setPrice(product.price)
     setSelectedProduct(product)
     setEditState(true)
-    
+
    }
    
    const updateProduct = () => {
@@ -54,6 +58,7 @@ const ProductList = () => {
     setPrice("")
     setEditState(false)
     setSelectedProduct(null)
+    toast.info("Cancelled")
    }
 
     return (
@@ -88,8 +93,7 @@ const ProductList = () => {
       </table>
             </div>
             <div className="total">
-            <h1>GRAND TOTAL</h1>
-        <h1>{product.reduce((a,v) => a + +v.price, 0)}</h1>
+            <h1>GRAND TOTAL = {product.reduce((a,v) => a + +v.price, 0)}</h1>
         </div>
         <div>
            <p>Enter Item</p><input onChange={(e) => setItem(e.target.value)} onKeyDown = {(e) => e.code === "Enter" ? quantityRef?.current?.focus() : void 0} value={item} ref={itemRef}/> 

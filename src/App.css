@@ -75,3 +75,12 @@ td {
   font-weight: bold;
   font-size: 15px;
 }
+
+.total{
+  border: 3px solid green;
+  box-sizing: border-box;
+  width: 400px;
+  margin: 5px auto;
+  padding: 0;
+  
+}

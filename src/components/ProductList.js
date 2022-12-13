@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { SHOP } from "../constants";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ProductList = () => {
    const [product, setProduct] = useState(SHOP)
-
    const [item, setItem] = useState('')
    const [quantity, setQuantity] = useState('')
    const [price, setPrice] = useState('')
@@ -11,8 +12,13 @@ const ProductList = () => {
    const [selectedProduct, setSelectedProduct] = useState({})
    const [editState, setEditState] = useState(false)
 
+   const itemRef = useRef(null)
+   const quantityRef = useRef(null)
+   const priceRef = useRef(null)
+ 
    const deleteProduct = (givenId) => {
     setProduct(product.filter((p) => p.id !== givenId));
+    toast.warn("Product Deleted")
    }
 
    const addProduct = () => {
@@ -20,6 +26,7 @@ const ProductList = () => {
     setItem("")
     setQuantity("")
     setPrice("")
+    toast.success("Product Added")
    }
 
    const storeProduct = (product) => {
@@ -28,6 +35,7 @@ const ProductList = () => {
     setPrice(product.price)
     setSelectedProduct(product)
     setEditState(true)
+    
    }
    
    const updateProduct = () => {
@@ -37,6 +45,15 @@ const ProductList = () => {
     setItem("")
     setQuantity("")
     setPrice("")
+    toast.info("Product Updated")
+   }
+
+   const cancelProduct = () => {
+    setItem("")
+    setQuantity("")
+    setPrice("")
+    setEditState(false)
+    setSelectedProduct(null)
    }
 
     return (
@@ -63,29 +80,38 @@ const ProductList = () => {
                     <td>{products.quantity * products.price}</td>
                     <td>{<button id="delete" onClick={() => deleteProduct(products.id)}>Delete</button>} 
                      {<button id="update" onClick={() => storeProduct(products)}>Update</button>}</td>
+                  
                     </tr>
-                    
                 )
                 })
                 }   
       </table>
             </div>
-   
+            <div className="total">
+            <h1>GRAND TOTAL</h1>
+        <h1>{product.reduce((a,v) => a + +v.price, 0)}</h1>
+        </div>
         <div>
-           <p>Enter Item</p><input onChange={(e) => setItem(e.target.value)} value={item}/> 
+           <p>Enter Item</p><input onChange={(e) => setItem(e.target.value)} onKeyDown = {(e) => e.code === "Enter" ? quantityRef?.current?.focus() : void 0} value={item} ref={itemRef}/> 
         </div>
         <br></br>
         <div>
-           <p>Enter Quantity</p> <input type={"number"} onChange={(e) => setQuantity(e.target.value)} value={quantity}/> 
+           <p>Enter Quantity</p> <input type={"number"} onChange={(e) => setQuantity(e.target.value)} onKeyDown = {(e) => e.code === "Enter" ? priceRef?.current?.focus() : void 0}  value={quantity} ref={quantityRef}/> 
         </div>
         <br></br>
         <div>
-            <p>Enter Price</p><input type={"number"} onChange={(e) => setPrice(e.target.value)}  value={price}/> 
+            <p>Enter Price</p><input type={"number"} onChange={(e) => setPrice(e.target.value)}  value={price} ref={priceRef} onKeyDown = {(e) => e.code === "Enter" ? addProduct() : void 0}/> 
         </div>
         <br></br>
         <div>
             <button onClick={() => editState ? updateProduct() : addProduct()}>{editState ? "Update" : "Add"}</button>
         </div>
+        { editState && (
+        <div>
+            <button onClick={() => cancelProduct()}>Cancel</button>
+        </div>)
+        }
+      
        </div>
    
     )

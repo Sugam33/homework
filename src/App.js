@@ -1,8 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
-
 import Counter from './components/Counter';
 import ProductList from './components/ProductList';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
     <div className="App">
       <Counter />
       <ProductList />
+      <ToastContainer />
       <br></br>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
